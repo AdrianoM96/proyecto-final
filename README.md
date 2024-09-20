@@ -1,6 +1,6 @@
 # proyecto-final
 Este proyecto es un E-Commerce de indumentaria, realizado con NextJs y utilizando un proyecto bancked hecho en nodeJs y usando MongoDb
-Aqui el repo (https://github.com/AdrianoM96/proyecto-final)
+Aqui el repo (https://github.com/AdrianoM96/proyecto-final-back)
 
 ## Demo
  ![](./src/assets/gif/demo.gif)

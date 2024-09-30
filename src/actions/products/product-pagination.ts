@@ -6,6 +6,7 @@ interface PaginationOptions {
   take?: number;
   gender?: string;
   search?: string;
+  category?:string;
 }
 
 export const getPaginatedProductsWithImages = async ({
@@ -13,6 +14,7 @@ export const getPaginatedProductsWithImages = async ({
   take = 12,
   gender,
   search,
+  category,
 }: PaginationOptions) => {
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
@@ -23,6 +25,7 @@ export const getPaginatedProductsWithImages = async ({
       limit: take.toString(),
       ...(gender && { gender }),
       ...(search && { search }), 
+      ...(category && { category }), 
     }).toString();
 
    

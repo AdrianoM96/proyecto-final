@@ -12,12 +12,14 @@ export const ProductGrid = ( { products }: Props ) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-10 mb-10">
       {
-        products.map( product => (
-          <ProductGridItem
-            key={ product._id }
-            product={ product }
-          />
-        ) )
+        products
+          .filter(product => !product.isPaused) 
+          .map(product => (
+            <ProductGridItem
+              key={product._id}
+              product={product}
+            />
+          ))
       }
 
     </div>

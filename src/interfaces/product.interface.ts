@@ -21,6 +21,7 @@ export interface Product {
   gender?: Category
   sizes?:string
   category:any
+  isPaused?:boolean
 }
 
 export interface CartProduct {

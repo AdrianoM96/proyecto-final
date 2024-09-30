@@ -9,6 +9,10 @@ import { Order, OrderAddress } from '../../../../interfaces/all.interface'
 
 
 
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import axios from 'axios';
+
+
 interface Props {
   params: {
     id: string;
@@ -18,6 +22,9 @@ interface Props {
 
 
 export default function OrdersByIdPage({ params }: Props) {
+  initMercadoPago('APP_USR-86813585-f8a6-47af-a30d-4e7e18a8e149',{
+    locale:"es-AR",
+  });
 
   const { id } = params;
   const { user } = useAuth()
@@ -25,6 +32,9 @@ export default function OrdersByIdPage({ params }: Props) {
   
   const [address, setAddress] = useState<OrderAddress | null>(null);
   const [orderTr, setOrderTr] = useState<Order | null>(null);
+
+
+  const [preferendeId,setPreferenceId] = useState('')
 
   const fetchOrder = async () => {
     const { ok, order } = await getOrderById(id, user);
@@ -45,6 +55,29 @@ export default function OrdersByIdPage({ params }: Props) {
   }
   const handlePaymentSuccess = () => {
     fetchOrder();
+  }
+
+  const createPreference = async () => {
+    try{
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}/mercadopago/create-preference`,{
+        title: "asd",
+        quantity: 2,
+        price: 2,
+    })
+    const { id } = response.data
+    return id
+    }catch (error){
+      console.log(error)
+    }
+  }
+
+  const handlePay = async () => {
+    const id = await createPreference()
+    if(id){
+      setPreferenceId(id)
+      console.log("id")
+      console.log(id)
+    }
   }
 
 
@@ -141,8 +174,17 @@ export default function OrdersByIdPage({ params }: Props) {
                     ? (
                       <OrderStatus isPaid={orderTr!.isPaid ?? false} />
                     ) : (
+                      <>
+                        <PayPalButton amount={orderTr!.total} orderId={orderTr!._id} onPaymentSuccess={handlePaymentSuccess} />
+                        <button className='btn-primary' onClick={() => handlePay()}>Comprar mercado pago</button>
+                        {
+                          preferendeId && <Wallet initialization={{ preferenceId: preferendeId }} customization={{ texts: { valueProp: 'smart_option' } }} />
+                        }
+                       
+                      </>
 
-                      <PayPalButton amount={orderTr!.total} orderId={orderTr!._id} onPaymentSuccess={handlePaymentSuccess} />
+
+
                     )
                 }
 

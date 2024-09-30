@@ -11,7 +11,7 @@ cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
 const productSchema = z.object({
   _id: z.string().optional().nullable(),
-  name: z.string().min(3).max(255),
+  name: z.string().min(6).max(255),
   description: z.string(),
   price: z.coerce
     .number()
@@ -43,6 +43,7 @@ const productSchema = z.object({
   sizes: z.coerce.string().transform(val => val.split(',')),
   gender: z.enum(["men", "women", "kid", "unisex"]),
   currentStock: z.coerce.number().transform(val => Number(val.toFixed(2))),
+  isPaused: z.string().transform(val => val.toLowerCase() === 'true')
 });
 
 
@@ -99,10 +100,14 @@ async function uploadImagesBd(images: any, productId: any, token: string) {
 
 export const createUpdateProduct = async (formData: FormData, token: string) => {
 
+  
+
   const data = Object.fromEntries(formData);
 
-  const productParsed = productSchema.safeParse(data);
 
+  const productParsed = productSchema.safeParse(data);
+ 
+  
   if (!productParsed.success) {
     
     return { ok: false }
@@ -111,13 +116,15 @@ export const createUpdateProduct = async (formData: FormData, token: string) => 
   let product = productParsed.data;
   product.name = product.name.toLowerCase().replace(/ /g, '-').trim();
 
+ 
+
   const { _id, ...rest } = product;
 
   try {
    
 
     if (_id) {
-     
+
       product = await updateProduct(_id, product, token)
    
 

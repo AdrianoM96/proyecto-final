@@ -18,19 +18,28 @@ npm start
 ``` 
 El proyecto estará disponible en http://localhost:3000
 
-
+# User
+Introduce estos datos para loguearte
+    name = admin;
+    email = admin@admin.com
+    password = admin123
 
 ## Contenido
 Este proyecto con
 * Login, necesario para efectuar compras
+* Manejo de session por usuario
 * Catálogo de todos los productos .
-* Filtro por categorías, las cuales son : Hombres, Mujeres y Niños.
+* Filtro por categorías y subcategorias, las cuales son : Hombres, Mujeres y Niños.
 * Detalle de cada producto , mostrando en pantalla su nombre,descripción, precio, fotos y la posibilidad de poder elegir la cantidad que queremos agregar al carrito, siempre respetando el stock disponible.
+* Carrito persistente
 * Carrito: en el cual podemos ver todos los productos que hemos agregado a nuestro carrito, mostrando su imagen,nombre, cantidad elegida, sub total de cada producto y el total del carrito completo. Tenemos la posibilidad de eliminar algun producto en caso de no quererlo. Si queremos efectuar la compra, hay un botón para "Continuar", para luego ir al siguiente paso.
 * Formulario para que el usuario llene con información correcta y obligatoria, donde se le pide nombre completo, direccion, numero de telefono, ciudad, pais. Tiene la posibildad de que todos los datos ingresados se recuerden para cuando loguee en el mismo navegador u otro.
-* Una vez "Finalizada la orden" se genera el codigo de la orden y se la la posibildad de pagarla en ese momento , o en caso de no hacerla queda guardada la orden para poderla pagar luego, con paypal, mercado pago u otra tarjeta. Se podra ver en la pestaña ordenes.
-* Si se cumple el rol de administrador tendra en la barra de navegacion nuevas pestañas para hacer un abm de usuario productos y ver todas las ordenes efectuadas.
-* Perfil de usuario con algunos datos y posibilidad de cambiar contraseña
+* Una vez "Finalizada la orden" se genera el codigo de la orden y se la la posibildad de pagarla en ese momento , o en caso de no hacerla queda guardada la orden para poderla pagar luego, con paypal u mercado pago . Se podra ver en la pestaña ordenes.
+* Si se cumple el rol de administrador tendra en la barra de navegacion nuevas pestañas
+* El administrador podra hacer un abm de productos o pausar una publicacion, tambien cuenta con un buscador de productos
+* El administrador podra cambiar el rol de los usuarios registrados
+* El administrador podra ver todas las ordenes efectuadas y su condicion de pago
+* Perfil de usuario con algunos datos y posibilidad de cambiar contraseña.
 
 
 

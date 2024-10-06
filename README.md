@@ -61,5 +61,29 @@ Este proyecto con
 * Responsive Design
 
 
+## Dependencias
+
+Este proyecto utiliza las siguientes dependencias clave:
+
+- **Next.js**: 14.2.5
+- **React**: ^18
+- **Axios**: ^1.7.3
+- **React Hook Form**: ^7.52.2
+- **Zustand**: ^4.4.6
+- **Zod**: ^3.23.8
+- **Cloudinary**: ^2.4.0
+- **Swiper**: ^11.0.3
+- **PayPal React**: ^8.1.3
+- **MercadoPago SDK React**: ^0.0.19
+
+### Dependencias de desarrollo importantes
+
+- **Typescript**: ^5
+- **TailwindCSS**: ^3.4.1
+
+
+
+
+
 
 

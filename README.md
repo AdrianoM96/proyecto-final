@@ -29,7 +29,7 @@ Para que funcione las compras de mercado pago, debes usar un servidor https, no 
 
 `./cloudflared tunnel --url localhost:tu puerto/`
 
-Abrir el proyecto en esta dirección y además debe colocarla en la base de datos en el controlador de mercadoPago específicamente en estas líneas:
+Abrir el proyecto en esta dirección y además debe colocarla en el proyecto backend, en el controlador de mercadoPago , en estas líneas:
 
 - `success: COLOCA AQUI LA RUTA/orders/${req.body.orderId}`
 - `failure: COLOCA AQUI LA RUTA/orders/${req.body.orderId}`

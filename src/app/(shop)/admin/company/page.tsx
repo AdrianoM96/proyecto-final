@@ -21,9 +21,7 @@ type FormData = {
 export default function CompanyData() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [dataCompany, setDataCompany] = useState<FormData | null>(null)
   const cookie = Cookies.get()
-  const excludedFields = ['_id', 'singleton', 'createdAt','updatedAt', '__v','dateNow'];
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
     mode: 'onChange',
@@ -31,32 +29,39 @@ export default function CompanyData() {
 
   useEffect(() => {
     const fetchCompanyData = async () => {
-
+      try {
         const response = await getCompanyData(cookie.token)
         if (response.ok) {
-          setDataCompany(response.dataCompany)
+          reset(response.dataCompany)
         }
-
+      } catch (error) {
+        console.error('Error fetching company data:', error)
+      } finally {
+        setLoading(false)
+      }
     }
-
     fetchCompanyData()
-  }, [cookie.token])
-
-  useEffect(() => {
-    if (dataCompany) {
-      reset(dataCompany)
-    }
-  }, [dataCompany, reset])
+  }, [cookie.token, reset])
 
   const onSubmit = async (data: FormData) => {
-  
-      await addCompanyData(data, cookie.token)
-   
-      router.push('/admin/company')
- 
+    try {
+      console.log(data)
+      const response = await addCompanyData(data, cookie.token)
+      if (response.ok) {
+        router.push('/admin/company')
+      } else {
+        console.error('Error saving company data:', response.message)
+        // You might want to show an error message to the user here
+      }
+    } catch (error) {
+      console.error('Error submitting company data:', error)
+      // You might want to show an error message to the user here
+    }
   }
 
-
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -75,25 +80,97 @@ export default function CompanyData() {
                 <span className="block sm:inline"> Por favor, complete todos los campos requeridos.</span>
               </div>
             )}
-           {dataCompany &&
-              Object.keys(dataCompany)
-                .filter(field => !excludedFields.includes(field)) 
-                .map((field) => (
-                <div key={field}>
-                  <label htmlFor={field} className="block text-sm font-medium text-gray-700">
-                    {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1').trim()}
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id={field}
-                      {...register(field as keyof FormData, { required: true })}
-                      type="text"
-                      className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      defaultValue={dataCompany[field as keyof FormData] || ''}
-                    />
-                  </div>
-                </div>
-              ))}
+            
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nombre</label>
+              <input
+                id="name"
+                {...register('name', { required: true })}
+                type="text"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700">Dirección</label>
+              <input
+                id="address"
+                {...register('address', { required: true })}
+                type="text"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="city" className="block text-sm font-medium text-gray-700">Ciudad</label>
+              <input
+                id="city"
+                {...register('city', { required: true })}
+                type="text"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Teléfono</label>
+              <input
+                id="phone"
+                {...register('phone', { required: true })}
+                type="text"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <input
+                id="email"
+                {...register('email', { required: true })}
+                type="email"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="condition" className="block text-sm font-medium text-gray-700">Condición</label>
+              <input
+                id="condition"
+                {...register('condition', { required: true })}
+                type="text"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="cuit" className="block text-sm font-medium text-gray-700">CUIT</label>
+              <input
+                id="cuit"
+                {...register('cuit', { required: true })}
+                type="text"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="iibb" className="block text-sm font-medium text-gray-700">IIBB</label>
+              <input
+                id="iibb"
+                {...register('iibb', { required: true })}
+                type="text"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="activityStart" className="block text-sm font-medium text-gray-700">Inicio de Actividad</label>
+              <input
+                id="activityStart"
+                {...register('activityStart', { required: true })}
+                type="text"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+
             <div>
               <button
                 type="submit"

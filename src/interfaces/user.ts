@@ -5,5 +5,6 @@ export interface User {
     password: string,
     role?: string,
     image?:string
+    emailVerified?:boolean
   }
   

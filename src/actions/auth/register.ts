@@ -15,7 +15,6 @@ export const registerUser = async ( user: User ) => {
    
     return {
         ok:true,
-        
         registerRequest:registerRequest.data,
         message:"Usuario creado",
     }

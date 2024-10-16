@@ -2,26 +2,37 @@
 
 import axios from "axios";
 
-async function updateOrder(orderId: string, transactionId: string, token: string) {
-  const res = await axios.put(
-    `${process.env.NEXT_PUBLIC_URL}/orders/${orderId}`, 
-    { transactionId },  
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      withCredentials: true, 
+    async function updateOrder(orderId: string, transactionId: string, token: any,  paymentMethod?: string) {
+      let isPaid;
+      let paidAt ;
+    
+      if (paymentMethod === "mercadopago") {
+        isPaid = true;
+        paidAt = new Date();
+      }
+    
+      const res = await axios.put(`${process.env.NEXT_PUBLIC_URL}/orders/${orderId}`,
+        {transactionId,isPaid,paidAt,paymentMethod},  
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      
+      return res.data;
     }
-  );
-  return res.data; 
-}
 
 
-export const setTransactionId = async( orderId: string, transactionId: string, token:string ) => {
+export const setTransactionId = async( orderId: string, transactionId: string, token:any, paymentMethod?: string ) => {
 
   try {
-    
-    const order = await updateOrder(orderId,transactionId,token)
+    console.log("EMPEZO LA TRANSACTION")
+
+
+    const order = await updateOrder(orderId,transactionId,token, paymentMethod)
+    console.log("TERMINO LA TRRANSACION")
 
     if ( !order ) {
       return {

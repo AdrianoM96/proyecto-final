@@ -1,16 +1,21 @@
+
+
 'use client'
 import { OrderStatus, PayPalButton, ProductImage, Title, useAuth } from '@/components';
 
 import { getOrderById } from "@/actions/order/get-order-by-id";
 import { currencyFormat } from '@/utils';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Order, OrderAddress } from '../../../../interfaces/all.interface'
 
 
-
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
-import axios from 'axios';
+import { useSearchParams } from 'next/navigation';
+import { createPreference, setTransactionId, updateStock } from '@/actions';
+
+import Cookies from 'js-cookie'
+import { useCartStore } from '@/store';
 
 
 interface Props {
@@ -21,33 +26,99 @@ interface Props {
 
 
 
+
 export default function OrdersByIdPage({ params }: Props) {
-  initMercadoPago('APP_USR-86813585-f8a6-47af-a30d-4e7e18a8e149',{
-    locale:"es-AR",
+  initMercadoPago('APP_USR-86813585-f8a6-47af-a30d-4e7e18a8e149', {
+    locale: "es-AR",
   });
 
   const { id } = params;
   const { user } = useAuth()
+  const searchParams = useSearchParams()
+
+  const [address, setAddress] = useState<OrderAddress | null>(null);
+  const [orderTr, setOrderTr] = useState<any>(null);
+
+
+  const [preferenceId, setPreferenceId] = useState('')
+  const [messageError, setMessageError] = useState('')
+
+  const clearCart = useCartStore( state => state.clearCart );
+  const cart = useCartStore( state => state.cart );
+
+  const token = Cookies.get('token');
+
+  const productsToStock = cart.map( product => ({
+    productId: product.id,
+    quantity: product.quantity,
+    size: product.size,
+  }))
 
   
-  const [address, setAddress] = useState<OrderAddress | null>(null);
-  const [orderTr, setOrderTr] = useState<Order | null>(null);
 
+  const handlePay = async () => {
 
-  const [preferendeId,setPreferenceId] = useState('')
-
-  const fetchOrder = async () => {
-    const { ok, order } = await getOrderById(id, user);
-    if(ok){
-
-      setOrderTr(order)
-      setAddress(order?.orderAddress || null);
-    }
+    const verifyStock = await updateStock(productsToStock, user, token || "", false)
+   
+  
+     if(verifyStock.ok){
+       const preferenceId = await createPreference(orderTr, params.id)
+       if (preferenceId) {
+        setPreferenceId(preferenceId)
+      }
+     }else {
+      verifyStock.outStock.forEach((error:any) => {
+        setMessageError(`${error.productName} talle ${error.size} no hay suficiente stock`);
+      });
+      
+     }
+  
   }
 
+
+  const fetchOrder = useCallback(async () => {
+    const { ok, order } = await getOrderById(id, user);
+    
+    if (ok) {
+      
+      setOrderTr(order)
+      setAddress(order?.orderAddress || null);
+     
+    }
+  }, [id, user]);
+
   useEffect(() => {
-    fetchOrder();
-  }, [id, user])
+    const status = searchParams.get('status')
+    const payment_id = searchParams.get('payment_id')
+
+    if (status && payment_id && status === 'approved' && !orderTr?.isPaid) {
+      const completeTrasaccion = async () => {
+        
+        if (token) {
+        fetchOrder();
+     
+          const response = await setTransactionId(id, payment_id, token, "mercadopago")
+          
+          if(response.ok == true) {
+         
+                     
+          const updateStocks = await updateStock(productsToStock, user, token, false)
+           
+            if(updateStocks.ok){
+              clearCart();
+            }
+          }
+          
+        }
+      }
+      completeTrasaccion();
+    } else if (!orderTr) {
+      fetchOrder();
+    }
+  }, [id, searchParams, orderTr, fetchOrder, cart, user, clearCart, token, productsToStock]);
+
+
+
 
   if (!orderTr || !address) {
 
@@ -55,29 +126,6 @@ export default function OrdersByIdPage({ params }: Props) {
   }
   const handlePaymentSuccess = () => {
     fetchOrder();
-  }
-
-  const createPreference = async () => {
-    try{
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}/mercadopago/create-preference`,{
-        title: "asd",
-        quantity: 2,
-        price: 2,
-    })
-    const { id } = response.data
-    return id
-    }catch (error){
-      console.log(error)
-    }
-  }
-
-  const handlePay = async () => {
-    const id = await createPreference()
-    if(id){
-      setPreferenceId(id)
-      console.log("id")
-      console.log(id)
-    }
   }
 
 
@@ -96,7 +144,7 @@ export default function OrdersByIdPage({ params }: Props) {
 
 
 
-              {orderTr!.orderItems.map((item) => (
+              {orderTr!.orderItems.map((item:any) => (
                 <div
                   key={item.product.name + "-" + item.size}
                   className="flex mb-5"
@@ -114,7 +162,7 @@ export default function OrdersByIdPage({ params }: Props) {
                   <div>
                     <p>{item.product.name}</p>
                     <p>
-                      ${item.price} x {item.quantity}
+                      ${item.price} x {item.quantity} {item.size}
                     </p>
                     <p className="font-bold">
                       Subtotal: {currencyFormat(item.price * item.quantity)}
@@ -158,7 +206,7 @@ export default function OrdersByIdPage({ params }: Props) {
                   {currencyFormat(orderTr!.subTotal)}
                 </span>
 
-                <span>Impuestos (15%)</span>
+                <span>Impuestos (21%)</span>
                 <span className="text-right">{currencyFormat(orderTr!.tax)}</span>
 
                 <span className="mt-5 text-2xl">Total:</span>
@@ -175,16 +223,28 @@ export default function OrdersByIdPage({ params }: Props) {
                       <OrderStatus isPaid={orderTr!.isPaid ?? false} />
                     ) : (
                       <>
-                        <PayPalButton amount={orderTr!.total} orderId={orderTr!._id} onPaymentSuccess={handlePaymentSuccess} />
-                        <button className='btn-primary' onClick={() => handlePay()}>Comprar mercado pago</button>
-                        {
-                          preferendeId && <Wallet initialization={{ preferenceId: preferendeId }} customization={{ texts: { valueProp: 'smart_option' } }} />
+                        <PayPalButton amount={orderTr!.total} orderId={orderTr!._id} onPaymentSuccess={handlePaymentSuccess} productsToStock={productsToStock} token={token} user={user} />
+
+                        <button
+                           className={`w-full h-full border-none px-5 py-2 rounded cursor-pointer ${preferenceId ? 'bg-gray-400 text-gray-200' : 'bg-[#009ee3] text-white'}`}
+                          onClick={handlePay}
+                          disabled={!!preferenceId} 
+                        >
+                          Pagar con MercadoPago
+                        </button>
+                        { messageError &&
+
+                          <p className='text-red-600 text-center text-base'> {messageError}</p>
                         }
-                       
+
+                        {preferenceId && (
+                          <Wallet
+                            initialization={{ preferenceId: preferenceId }}
+                            customization={{ texts: { valueProp: 'smart_option' } }}
+                          />
+                        )}
+
                       </>
-
-
-
                     )
                 }
 
@@ -196,3 +256,4 @@ export default function OrdersByIdPage({ params }: Props) {
     </div>
   );
 }
+

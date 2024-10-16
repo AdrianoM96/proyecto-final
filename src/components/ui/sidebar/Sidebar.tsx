@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import clsx from 'clsx';
-import { IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPeopleOutline, IoPersonOutline, IoShirtOutline, IoTicketOutline } from 'react-icons/io5';
+import { IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPeopleOutline, IoPersonOutline, IoShirtOutline, IoTicketOutline, IoBusinessOutline, IoClipboardOutline, IoReceiptOutline, IoDocumentTextOutline  } from 'react-icons/io5';
+import { TbReportSearch } from "react-icons/tb";
 
 import { useCartStore, useUIStore } from '@/store';
 import { useAuth } from '@/components';
@@ -146,7 +147,26 @@ export const Sidebar = () => {
                 <IoPeopleOutline size={30} />
                 <span className="ml-3 text-xl">Usuarios</span>
               </Link>
+
+              <Link
+                href="/admin/reports"
+                onClick={() => closeMenu()}
+                className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              >
+                <TbReportSearch size={30} />
+                <span className="ml-3 text-xl">Reportes</span>
+              </Link>
+              <Link
+                href="/admin/company"
+                onClick={() => closeMenu()}
+                className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              >
+                <IoReceiptOutline     size={30} />
+                <span className="ml-3 text-xl">Datos fiscales</span>
+              </Link>
+          
             </>
+            
           )
         }
 

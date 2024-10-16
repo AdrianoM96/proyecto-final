@@ -57,8 +57,7 @@ export default function OrdersPage({ searchParams }: Props) {
       product.description.toLowerCase().includes(search.toLowerCase())
   )
   : products;
-  console.log("filteredProducts")
-  console.log(filteredProducts)
+ 
   useEffect(() => {
 
     const onOrderPage = async () => {

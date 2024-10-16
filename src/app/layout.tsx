@@ -9,21 +9,21 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - Proyecto final | Shop',
-    default:'Home - Proyecto final | Shop'
+    template: '%s - Proyecto final',
+    default:'Home - Proyecto final'
   },
   description: 'Una tienda virtual de productos',
   icons: {
     icon: '/new-favicon.ico', 
   },
   openGraph: {
-    title: 'Proyecto final | Shop',
+    title: 'Proyecto final',
     description: 'Una tienda virtual de productos',
     //images: [{ url: '/og-image.jpg' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Proyecto final | Shop',
+    title: 'Proyecto final ',
     description: 'Una tienda virtual de productos',
     //images: ['/twitter-image.jpg'],
   },

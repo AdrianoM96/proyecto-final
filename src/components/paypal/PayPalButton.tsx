@@ -3,18 +3,21 @@
 
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { CreateOrderData, CreateOrderActions, OnApproveActions, OnApproveData } from '@paypal/paypal-js';
-import { setTransactionId, paypalCheckPayment } from '@/actions';
+import { setTransactionId, paypalCheckPayment, updateStock } from '@/actions';
 import Cookies from 'js-cookie';
 
 interface Props {
   orderId: string;
   amount: number;
   onPaymentSuccess: () => void;
+  productsToStock:any
+  token:any
+  user:any
 }
 
 
 
-export const PayPalButton = ({ orderId, amount, onPaymentSuccess  }: Props) => {
+export const PayPalButton = ({ orderId, amount, onPaymentSuccess, productsToStock, token, user  }: Props) => {
 
 const cookies = Cookies.get();
   const [{ isPending }] = usePayPalScriptReducer();
@@ -48,6 +51,9 @@ const cookies = Cookies.get();
     
 
     const { ok } = await setTransactionId( orderId,transactionId,cookies.token );
+    await updateStock(productsToStock,user, token )
+
+    
     if ( !ok ) {
       throw new Error('No se pudo actualizar la orden');
     }

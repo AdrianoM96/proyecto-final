@@ -16,21 +16,30 @@ import { getCountries } from './country/get-countries';
 
 import { setTransactionId } from './payments/set-transaction-id';
 import { paypalCheckPayment } from './payments/paypal-check-payment';
+import { createPreference } from './payments/mercadopago-payment';
 
 import { placeOrder } from './order/place-order';
 import { getOrderById } from './order/get-order-by-id';
 import { getOrdersByUser } from './order/get-orders-by-user';
 import { getPaginatedOrders } from './order/order-pagination';
 import { getPaginatedAllOrders } from './order/get-paginated-orders';
+import { updateStock } from './order/update-stock';
 
 import { login } from './auth/login';
 import { registerUser } from './auth/register';
 import { verifyToken } from './auth/verifyToken';
 import { logOut } from './auth/logOut';
+import { verifyEmail } from './auth/verifyEmail';
 
 import { getPaginatedAllUsers } from './user/get-paginated-users';
 import { changeUserRole } from './user/change-user-role';
 import { changeUserPassword } from './user/change-user-password';
+
+import { generateReport } from './pdf/generateReport';
+import { getFactura } from './pdf/getFactura';
+
+import { addCompanyData } from './company/add-data-company';
+import { getCompanyData } from './company/get-data-company';
 
 export {
   deleteUserAddress,
@@ -47,16 +56,23 @@ export {
   getCountries,
   setTransactionId,
   paypalCheckPayment,
+  createPreference,
   placeOrder,
   getOrderById,
   getOrdersByUser,
   getPaginatedOrders,
   getPaginatedAllOrders,
+  updateStock,
   login,
   registerUser,
   verifyToken,
+  verifyEmail,
   logOut,
   getPaginatedAllUsers,
   changeUserRole,
-  changeUserPassword
+  changeUserPassword,
+  generateReport,
+  getFactura,
+  addCompanyData,
+  getCompanyData
 };

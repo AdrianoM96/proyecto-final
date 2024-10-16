@@ -9,7 +9,7 @@ export const Footer = () => {
         href='/'
       >
         <span className={`${ titleFont.className } antialiased font-bold `}>Proyecto final </span>
-        <span>| shop </span>
+        <span> </span>
         <span>© { new Date().getFullYear() }</span>
       </Link>
 
@@ -20,12 +20,6 @@ export const Footer = () => {
         Privacidad & Legal
       </Link>
 
-      <Link
-        href='/'
-        className="mx-3"
-      >
-        Ubicaciones
-      </Link>
 
 
     </div>

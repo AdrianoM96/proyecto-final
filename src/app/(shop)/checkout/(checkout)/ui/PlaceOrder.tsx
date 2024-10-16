@@ -31,7 +31,7 @@ const cookies = Cookies.get();
     state.getSummaryInformation()
   );
   const cart = useCartStore( state => state.cart );
-  const clearCart = useCartStore( state => state.clearCart );
+  
 
   useEffect(() => {
     setLoaded(true);
@@ -51,8 +51,7 @@ const cookies = Cookies.get();
 
    
     const resp = await placeOrder( productsToOrder, address, user, cookies.token);
-    console.log(resp.productsFiltered)
-
+ 
 
 
      if ( !resp?.ok ) {
@@ -62,7 +61,7 @@ const cookies = Cookies.get();
      }
 
     
-     clearCart();
+   
      router.replace('/orders/' + resp.order?._id );
 
   

@@ -60,12 +60,12 @@ export const TopMenu = () => {
           <span className={`${titleFont.className} antialiased font-bold`}>
             Proyecto final
           </span>
-          <span> | Shop</span>
+          <span> </span>
         </Link>
       </div>
 
       <div className="hidden sm:flex space-x-4">
-        {/* Dropdown para Hombres */}
+       
         <div className="relative group">
           <Link
             className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
@@ -91,7 +91,6 @@ export const TopMenu = () => {
           </div>
         </div>
 
-        {/* Dropdown para Mujeres */}
         <div className="relative group">
           <Link
             className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
@@ -117,7 +116,7 @@ export const TopMenu = () => {
           </div>
         </div>
 
-        {/* Dropdown para Niños */}
+      
         <div className="relative group">
           <Link
             className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"

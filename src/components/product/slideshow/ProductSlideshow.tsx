@@ -70,7 +70,7 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
             width={300} 
             height={300}
             src="/imgs/placeholder.jpg"
-            //srcSet="/imgs/placeholder.jpg?w=128&q=75 1x, /imgs/placeholder.jpg?w=256&q=75 2x"
+            
             alt={title}
             className="rounded-lg object-fill"
           />
@@ -108,7 +108,7 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
               width={300} 
               height={300}
                src="/imgs/placeholder.jpg"
-            //srcSet="/imgs/placeholder.jpg?w=128&q=75 1x, /imgs/placeholder.jpg?w=256&q=75 2x"
+            
               alt={title}
               className="rounded-lg object-fill"
             />

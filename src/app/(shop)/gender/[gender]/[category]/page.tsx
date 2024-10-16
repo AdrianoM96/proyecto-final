@@ -17,13 +17,9 @@ interface Props {
 
 
 export default async function CategoryByPage({ params, searchParams }: Props) {
-console.log("paramssss")
-console.log(params)
+
   const { category, gender } = params;
-  console.log("category")
-  console.log(category)
-  console.log("gender")
-  console.log(gender)
+  
   const page = searchParams.page ? parseInt( searchParams.page ) : 1;
 
   const { products, totalPages } = await getPaginatedProductsWithImages({ 

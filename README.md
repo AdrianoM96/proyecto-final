@@ -55,10 +55,15 @@ Este proyecto con
 * El administrador podra hacer un abm de productos con sus datos incluyendo imagenes, pausar una publicacion, tambien cuenta con un buscador de productos en el panel
 * El administrador podra cambiar el rol de los usuarios registrados
 * El administrador podra ver todas las ordenes efectuadas y su condicion de pago
+* El administrador podra pedir reportes de ventas entre un rango de fecha que quieras y reportes de stock actual
+* El administrador podra establecer sus datos fiscales que van en la factura
 * Perfil de usuario con algunos datos y posibilidad de cambiar contraseña.
+* Envio de correo electronico para confirmar el email dede el perfil
 * Validacion de formularios
 * Uso de server y clients components
 * Responsive Design
+* Envio automatico de correo electronico de la factura al pagar la orden
+
 
 
 ## Dependencias

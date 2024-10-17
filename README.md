@@ -25,15 +25,11 @@ Introduce estos datos para loguearte
     password = admin123
 
 # Aclaracion
-Para que funcione las compras de mercado pago, debes usar un servidor https, no localhost, por eso en este proyecto viene un archivo de cloudflare para que puedas crear tu tunnel con:
+Para que funcione las compras de mercado pago, debes usar un servidor https, por eso en este proyecto viene un archivo de cloudflare para que puedas crear tu tunnel con:
 
 `./cloudflared tunnel --url localhost:tu puerto/`
 
-Abrir el proyecto en esta dirección y además debe colocarla en el proyecto backend, en el controlador de mercadoPago , en estas líneas:
-
-- `success: COLOCA AQUI LA RUTA/orders/${req.body.orderId}`
-- `failure: COLOCA AQUI LA RUTA/orders/${req.body.orderId}`
-- `pending: COLOCA AQUI LA RUTA/orders/${req.body.orderId}`
+Abrir el proyecto en esta dirección y además debe colocarla en el proyecto backend, en las variables de mercadopago
 
 También debes leer las instrucciones del proyecto backend.
 

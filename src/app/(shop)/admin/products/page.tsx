@@ -93,6 +93,7 @@ export default function OrdersPage({ searchParams }: Props) {
     return <p>Loading...</p>
   }
 
+ 
 
   return (
     <>
@@ -146,7 +147,7 @@ export default function OrdersPage({ searchParams }: Props) {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {products && products.map((product) => (
               <tr key={product._id} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   <Link href={`/product/${product.name}`}>

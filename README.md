@@ -58,7 +58,7 @@ Este proyecto con
 * Validacion de formularios
 * Uso de server y clients components
 * Responsive Design
-* Envio automatico de correo electronico de la factura al pagar la orden
+* Envio de la factura de compra al correo del cliente
 
 
 

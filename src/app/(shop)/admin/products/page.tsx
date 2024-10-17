@@ -68,9 +68,9 @@ export default function OrdersPage({ searchParams }: Props) {
         setProducts(productsAdmin);
         setCurrentPage(currentPage);
         setTotalPages(totalPages);
-
+        setIsLoading(false)
       } catch (error) {
-        console.error("Failed to fetch orders:", error)
+        setIsLoading(false)
       } finally {
         setIsLoading(false)
       }

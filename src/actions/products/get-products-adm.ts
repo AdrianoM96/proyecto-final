@@ -1,25 +1,39 @@
 import axios from "axios";
 
-async function getData(){
+async function getData() {
+  
     const res = await axios.get(`${process.env.NEXT_PUBLIC_URL}/products`)
-    return res.data
-  }
-  
 
-export const getProductAdm = async (name:string) =>{
+    if (Array.isArray(res.data) && res.data.length === 0) {
+       
+        return null;
+    } else {
+    
+        return res.data
+    }
+}
 
-    try{
 
+export const getProductAdm = async (name: string) => {
+
+    try {
+      
         const products = await getData()
-     
-  
-        const product= products.productsAdmin.find((product: { name: string; })  => product.name===name)
+    
+        let product = null
+        if(products){
+        
+           
+            product = products.productsAdmin.find((product: { name: string; }) => product.name === name)
+          
+        }
 
-     
-        return{
+        if (!product) return null;
+
+        return {
             ...product
         }
-    }catch(error){
+    } catch (error) {
         console.log(error)
         throw new Error('Error al obtener un producto por nombre')
     }

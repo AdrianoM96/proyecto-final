@@ -2,70 +2,71 @@
 
 import { createUpdateProduct, deleteProductImage } from '@/actions';
 import { ProductImage } from '@/components';
-import { Category } from '@/interfaces';
-
-import { useEffect,useCallback  } from 'react';
+import { Category, Product } from '@/interfaces';
+import { useEffect, useCallback } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 interface Props {
-  product: any;
+  product: Product | null;
   categories: Category[]
 }
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-const cookie = Cookies.get()
-interface FormInputs {
-  name: string,
-  description: string,
-  quantity: number,
-  price: number,
-  sizes: any;
-  currentStock: number;
-  gender: 'men' | 'women' | 'kid',
-  category: string,
-  stocks: any
-  images?: FileList
-  isPaused:boolean;
+const cookie = Cookies.get();
 
+interface FormInputs {
+  name: string;
+  description: string;
+  price: number;
+  sizes: string;
+  currentStock: number;
+  gender: 'men' | 'women' | 'kid' | 'unisex';
+  category: string;
+  stocks: any;
+  images?: FileList;
+  isPaused: boolean;
 }
 
-export const ProductForm = ({ product , categories }: Props) => {
-  
-   const router = useRouter();
-  
- 
+export const ProductForm = ({ product, categories }: Props) => {
+  const router = useRouter();
+
   const {
-    handleSubmit, register, control, formState: { errors,isValid },
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
     setValue,
+    watch,
   } = useForm<FormInputs>({
     defaultValues: {
-      ...product,
-      category: product.category?._id ?? [],
-   
-      sizes: sizes[0] , 
-      currentStock: product?.stocks?.length > 0 ? product.stocks[0].quantity : 0,
-      images:undefined,
-      isPaused: product.isPaused || false,
-
+      name: product?.name ?? '',
+      description: product?.description ?? '',
+      price: product?.price ?? 0,
+      sizes: product?.sizes?.[0] ?? sizes[0],
+      currentStock: product?.stocks?.[0]?.quantity ?? 0,
+      gender: product?.gender ?? 'men',
+      category: product?.category?._id ?? [],
+      stocks: product?.stocks ?? [],
+      images: undefined,
+      isPaused: product?.isPaused ?? false,
     }
-  })
+  });
+
   const watchSizes = useWatch({ control, name: 'sizes' });
   const watchCurrentStock = useWatch({ control, name: 'currentStock' });
 
-  
   const updateCurrentStock = useCallback((size: string) => {
-    const stockForSize = product?.stocks?.find((stock: any) => stock.size.name === size)
-    setValue('currentStock', stockForSize ? stockForSize.quantity : 0)
-  }, [product, setValue])
+    const stockForSize = product?.stocks?.find((stock: any) => stock.size.name === size);
+    setValue('currentStock', stockForSize ? stockForSize.quantity : 0);
+  }, [product, setValue]);
 
-  
   useEffect(() => {
     if (watchSizes) {
-      updateCurrentStock(watchSizes)
+      updateCurrentStock(watchSizes);
     }
-  }, [watchSizes, updateCurrentStock])
+  }, [watchSizes, updateCurrentStock]);
 
   useEffect(() => {
     const updatedStocks = product?.stocks?.map((stock: any) => {
@@ -73,23 +74,18 @@ export const ProductForm = ({ product , categories }: Props) => {
         return { ...stock, quantity: watchCurrentStock };
       }
       return stock;
-    });
+    }) ?? [];
     setValue('stocks', updatedStocks);
-  }, [watchCurrentStock, watchSizes,setValue,product?.stocks]);
-
-
+  }, [watchCurrentStock, watchSizes, setValue, product?.stocks]);
 
   const onSubmit = async (data: FormInputs) => {
     const formData = new FormData();
 
     const { images, ...productToSave } = data;
-    
 
-    if (product._id) {
-      formData.append("_id", product._id ?? "");
+    if (product?._id) {
+      formData.append("_id", product._id);
     }
-   
-    
 
     formData.append("name", productToSave.name);
     formData.append("description", productToSave.description);
@@ -98,8 +94,8 @@ export const ProductForm = ({ product , categories }: Props) => {
     formData.append("category", productToSave.category);
     formData.append("gender", productToSave.gender);
     formData.append('stocks', JSON.stringify(data.stocks));
-    formData.append("currentStock",productToSave.currentStock.toString());
-    formData.append("isPaused",productToSave.isPaused.toString());
+    formData.append("currentStock", productToSave.currentStock.toString());
+    formData.append("isPaused", productToSave.isPaused.toString());
 
     if (images) {
       for (let i = 0; i < images.length; i++) {
@@ -107,19 +103,17 @@ export const ProductForm = ({ product , categories }: Props) => {
       }
     }
 
-     const { ok, product:updatedProduct } = await createUpdateProduct(formData, cookie.token)
-    
+    const { ok, product: updatedProduct } = await createUpdateProduct(formData, cookie.token);
 
-     if ( !ok ) {
-         return;
-     }
+    if (!ok) {
+      return;
+    }
 
-     router.replace(`/admin/product/${updatedProduct?.name }`)
-  }
+    router.replace(`/admin/product/${updatedProduct?.name}`);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3">
-    
       <div className="w-full">
         <div className="flex flex-col mb-2">
           <span>Nombre</span>
@@ -164,8 +158,7 @@ export const ProductForm = ({ product , categories }: Props) => {
             {
               categories.map(category => (
                 <option key={category._id} value={category._id}>{category.name}</option>
-              )
-              )
+              ))
             }
           </select>
         </div>
@@ -179,7 +172,7 @@ export const ProductForm = ({ product , categories }: Props) => {
               type="checkbox"
               className="border-gray-500 before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"
               id="checkbox"
-              { ...register('isPaused') }
+              {...register('isPaused')}
             />
             <div className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
               <svg
@@ -198,7 +191,7 @@ export const ProductForm = ({ product , categories }: Props) => {
               </svg>
             </div>
           </label>
-          <span>¿Pausar publicacion ?</span>
+          <span>¿Pausar publicación?</span>
         </div>
 
         <button className="btn-primary w-full">
@@ -206,16 +199,8 @@ export const ProductForm = ({ product , categories }: Props) => {
         </button>
       </div>
 
-    
       <div className="w-full">
-
-
-
-    
         <div className="flex flex-col">
-
-     
-
           <div className="flex flex-col mb-2">
             <span>Talla</span>
             <select
@@ -244,18 +229,17 @@ export const ProductForm = ({ product , categories }: Props) => {
             />
           </div>
 
-
           <div className="flex flex-col mb-2">
             <span>Fotos</span>
             <input
               type="file"
               {...register('images', {
                 validate: {
-                  required: (value:any) => {
-                    if (!product.images || product.images.length === 0) {
+                  required: (value: any) => {
+                    if (!product?.images || product.images.length === 0) {
                       return value.length > 0 || 'Debes subir al menos una imagen';
                     }
-                    return true; 
+                    return true;
                   }
                 }
               })}
@@ -264,12 +248,11 @@ export const ProductForm = ({ product , categories }: Props) => {
               accept="image/png, image/jpeg, image/avif"
             />
             {errors.images && <p className='text-lg text-red-500'>{errors.images.message}</p>}
-
           </div>
 
           <div className='grid grid-cols-1 sm:grid-cols-3 gap-3'>
             {
-              product.images?.map((image: any) => (
+              product?.images?.map((image: any) => (
                 <div key={image._id}>
                   <ProductImage
                     alt={product.name ?? ""}
@@ -288,11 +271,8 @@ export const ProductForm = ({ product , categories }: Props) => {
                   </button>
                 </div>
               ))
-
             }
-
           </div>
-
         </div>
       </div>
     </form>

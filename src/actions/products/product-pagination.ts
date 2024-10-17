@@ -43,7 +43,7 @@ export const getPaginatedProductsWithImages = async ({
     };
   
   } catch (error) {
-    console.error("Error fetching products:", error);
+   
     return{ products:[]}
     
   }

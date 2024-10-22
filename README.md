@@ -59,7 +59,7 @@ Este proyecto con
 * Uso de server y clients components
 * Responsive Design
 * Envio de la factura de compra al correo del cliente
-* Historial de busqueda para cada cuenta
+* Historial de busqueda para cada cuenta, el cual se borra automaticamente cada 15 dias para limpiar espacio
 * Si se olvida la contraseña se puede recuperar mediante un email a la cuenta y siguiendo las instrucciones
 * Verificar email 
 

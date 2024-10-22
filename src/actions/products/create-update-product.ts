@@ -114,6 +114,7 @@ export const createUpdateProduct = async (formData: FormData, token: string) => 
   }
 
   let product = productParsed.data;
+  
   product.name = product.name.toLowerCase().replace(/ /g, '-').trim();
 
  

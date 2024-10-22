@@ -140,7 +140,7 @@ const verifyPayPalPayment = async (
       ...requestOptions,
       cache: 'no-store'
     }).then( r => r.json() );
-    console.log({resp});
+
     return resp;
     
   } catch (error) {

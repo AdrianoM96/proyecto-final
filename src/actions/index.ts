@@ -30,6 +30,9 @@ import { registerUser } from './auth/register';
 import { verifyToken } from './auth/verifyToken';
 import { logOut } from './auth/logOut';
 import { verifyEmail } from './auth/verifyEmail';
+import { recoveryPassword } from './auth/forgetPassword';
+import { newPassword } from './auth/newPassword';
+
 
 import { getPaginatedAllUsers } from './user/get-paginated-users';
 import { changeUserRole } from './user/change-user-role';
@@ -40,6 +43,10 @@ import { getFactura } from './pdf/getFactura';
 
 import { addCompanyData } from './company/add-data-company';
 import { getCompanyData } from './company/get-data-company';
+
+import { getSearchHistory } from './searchHistory/get-search-history';
+import { addSearchHistory } from './searchHistory/save-search-history';
+
 
 export {
   deleteUserAddress,
@@ -74,5 +81,11 @@ export {
   generateReport,
   getFactura,
   addCompanyData,
-  getCompanyData
+  getCompanyData,
+  getSearchHistory,
+  addSearchHistory,
+  recoveryPassword,
+  newPassword,
+
+
 };

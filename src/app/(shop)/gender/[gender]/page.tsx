@@ -27,6 +27,8 @@ export default async function GenderByPage({ params, searchParams }: Props) {
     gender: gender as any,
   });
 
+
+
   if (!products || products.length === 0) {
     
     return (
@@ -51,9 +53,9 @@ export default async function GenderByPage({ params, searchParams }: Props) {
 
 
   return (
-    <>
+    <>        
       <Title
-        title={`Artículos de ${ labels[gender] }`}
+        title={`Artículos ${ labels[gender] }`}
         subtitle="Todos los productos"
         className="mb-2"
       />

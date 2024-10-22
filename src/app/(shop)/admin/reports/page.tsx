@@ -81,7 +81,6 @@ export default function ReportesPage() {
           <option value="">Elige un reporte...</option>
           <option value="ventas">Reporte de Ventas</option>
           <option value="stock">Reporte de Stock</option>
-          <option value="productos">Reporte de Productos</option>
         </select>
       </div>
 

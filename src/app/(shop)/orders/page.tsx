@@ -81,7 +81,7 @@ export default function OrdersPage({ searchParams }: Props) {
   return (
     <>
       <Title title="Orders" />
-
+  
       <div className="mb-10">
         {orderss.length === 0 ? (
           <p>No tienes ordenes disponibles</p>
@@ -136,7 +136,7 @@ export default function OrdersPage({ searchParams }: Props) {
                       Ver orden
                     </Link>
                   </td>
-                  <td className="text-sm text-gray-900 font-light px-6 ">
+                  <td className="text-sm text-gray-900 font-light px-6  min-h-[60px]">
                     <button
                       onClick={() => handleDownload(order._id)}
                       className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
@@ -158,5 +158,6 @@ export default function OrdersPage({ searchParams }: Props) {
         {totalPages > 1 && <Pagination totalPages={totalPages} />}
       </div>
     </>
-  )
+  );
+  
 }

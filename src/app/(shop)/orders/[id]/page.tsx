@@ -1,31 +1,20 @@
-
-
 'use client'
 import { OrderStatus, PayPalButton, ProductImage, Title, useAuth } from '@/components';
-
 import { getOrderById } from "@/actions/order/get-order-by-id";
 import { currencyFormat } from '@/utils';
-import { useCallback, useEffect, useState } from 'react';
-
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { Order, OrderAddress } from '../../../../interfaces/all.interface'
-
-
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import { useSearchParams } from 'next/navigation';
 import { createPreference, setTransactionId, updateStock } from '@/actions';
-
 import Cookies from 'js-cookie'
 import { useCartStore } from '@/store';
-
 
 interface Props {
   params: {
     id: string;
   };
 }
-
-
-
 
 export default function OrdersByIdPage({ params }: Props) {
   initMercadoPago('APP_USR-86813585-f8a6-47af-a30d-4e7e18a8e149', {
@@ -39,14 +28,14 @@ export default function OrdersByIdPage({ params }: Props) {
   const [address, setAddress] = useState<OrderAddress | null>(null);
   const [orderTr, setOrderTr] = useState<any>(null);
 
-
   const [preferenceId, setPreferenceId] = useState('')
   const [messageError, setMessageError] = useState('')
-
+ 
   const clearCart = useCartStore( state => state.clearCart );
   const cart = useCartStore( state => state.cart );
 
   const token = Cookies.get('token');
+  const hasUpdatedStock = useRef(false);
 
   const productsToStock = cart.map( product => ({
     productId: product.id,
@@ -54,68 +43,60 @@ export default function OrdersByIdPage({ params }: Props) {
     size: product.size,
   }))
 
-  
-
   const handlePay = async () => {
-
     const verifyStock = await updateStock(productsToStock, user, token || "", false)
    
-  
-     if(verifyStock.ok){
-       const preferenceId = await createPreference(orderTr, params.id)
-       if (preferenceId) {
+    if(verifyStock.ok){
+      const preferenceId = await createPreference(orderTr, params.id)
+      if (preferenceId) {
         setPreferenceId(preferenceId)
       }
-     }else {
+    } else {
       verifyStock.outStock.forEach((error:any) => {
         setMessageError(`${error.productName} talle ${error.size} no hay suficiente stock`);
       });
-      
-     }
-  
+    }
   }
-
 
   const fetchOrder = useCallback(async () => {
     const { ok, order } = await getOrderById(id, user);
     
     if (ok) {
-      
       setOrderTr(order)
       setAddress(order?.orderAddress || null);
-     
     }
   }, [id, user]);
 
   useEffect(() => {
     const status = searchParams.get('status')
     const payment_id = searchParams.get('payment_id')
-
-    if (status && payment_id && status === 'approved' && !orderTr?.isPaid) {
+  
+    if (status && payment_id && status === 'approved' && !orderTr?.isPaid && !hasUpdatedStock.current) {
       const completeTrasaccion = async () => {
-        
         if (token) {
-        fetchOrder();
-     
           const response = await setTransactionId(id, payment_id, token, "mercadopago")
-          
-          if(response.ok == true) {
          
-                     
-          const updateStocks = await updateStock(productsToStock, user, token, false)
-           
-            if(updateStocks.ok){
-              clearCart();
+          if(response.ok === true) {
+            
+            if (!hasUpdatedStock.current) {
+              const updateStocks = await updateStock(productsToStock, user, token, true);
+   
+              if(updateStocks.ok){
+                fetchOrder();
+                clearCart();
+                hasUpdatedStock.current = true;
+              }
             }
           }
-          
         }
       }
+
       completeTrasaccion();
     } else if (!orderTr) {
       fetchOrder();
     }
-  }, [id, searchParams, orderTr, fetchOrder, cart, user, clearCart, token, productsToStock]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchOrder]);
 
 
 

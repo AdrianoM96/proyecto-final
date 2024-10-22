@@ -4,8 +4,7 @@
 import axios from 'axios';
 
   export const generateReport = async (methodPaymant: string, ) => {
-    console.log()
-    console.log()
+   
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}/pdf/factura`, {methodPaymant},{
         responseType: 'arraybuffer',

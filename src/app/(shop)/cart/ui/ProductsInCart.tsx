@@ -29,6 +29,15 @@ export const ProductsInCart = () => {
     return <p>Loading...</p>
   }
 
+  function formatProductName(name:string) {
+    const formattedName = name
+      .split('-') 
+      .map(word => word.toLowerCase()) 
+      .join(' '); 
+  
+    
+    return formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
+  }
 
   return (
     <>
@@ -50,7 +59,7 @@ export const ProductsInCart = () => {
             <Link 
               className="hover:underline cursor-pointer"
               href={ `/product/${ product.name } ` }>
-              { product.size } - {product.name}
+              { product.size } - {formatProductName(product.name)}
             </Link>
             
             <p>${product.price}</p>

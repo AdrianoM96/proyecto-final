@@ -60,7 +60,7 @@ export const Providers = ({ children }: Props) => {
   };
 
   const signIn = async (user: User) => {
-    try {
+    try { 
       const resp = await login(user);
       
       if (!resp.ok) {
@@ -123,7 +123,7 @@ export const Providers = ({ children }: Props) => {
         setIsAuthenticated, 
         isAuthenticated,
         errorsProvider,
-        setErrors
+        setErrors,
       }}>
         {children}
       </AuthContext.Provider>

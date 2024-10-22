@@ -34,7 +34,6 @@ export const getPaginatedProductsWithImages = async ({
     
     const { products, totalPages, currentPage, productsAdmin } = response.data;
 
-    
     return {
       currentPage,
       totalPages,

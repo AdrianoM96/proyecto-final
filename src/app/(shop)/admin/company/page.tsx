@@ -45,17 +45,17 @@ export default function CompanyData() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      console.log(data)
+    
       const response = await addCompanyData(data, cookie.token)
       if (response.ok) {
         router.push('/admin/company')
       } else {
         console.error('Error saving company data:', response.message)
-        // You might want to show an error message to the user here
+        
       }
     } catch (error) {
       console.error('Error submitting company data:', error)
-      // You might want to show an error message to the user here
+     
     }
   }
 

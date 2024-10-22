@@ -4,8 +4,7 @@
 import axios from 'axios';
 
   export const generateReport = async (reportType: string, año: number, fechaInicio:string, fechaFin:string) => {
-    console.log(fechaInicio)
-    console.log(fechaFin)
+    
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}/pdf/generate`, {reportType, año, fechaInicio, fechaFin},{
         responseType: 'arraybuffer',

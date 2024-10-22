@@ -53,6 +53,16 @@ export default async function ProductBySlugPage( { params }: Props ) {
      if ( !product ) {
        notFound();
      }
+
+     function formatProductName(name:string) {
+      const formattedName = name
+        .split('-') 
+        .map(word => word.toLowerCase()) 
+        .join(' '); 
+    
+      
+      return formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
+    }
   
   return (
     <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -80,7 +90,7 @@ export default async function ProductBySlugPage( { params }: Props ) {
       <div className="col-span-1 px-5">
 
         <h1 className={ ` ${ titleFont.className } antialiased font-bold text-xl` }>
-           { product.name } 
+           { formatProductName(product.name) } 
         </h1>
          <p className="text-lg mb-5">${ product.price }</p> 
 

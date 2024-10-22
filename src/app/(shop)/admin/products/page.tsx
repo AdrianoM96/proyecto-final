@@ -52,7 +52,7 @@ export default function OrdersPage({ searchParams }: Props) {
   };
 
   const filteredProducts = search
-  ? products.filter((product: { name: string; description: string; }) =>
+  ? products?.filter((product: { name: string; description: string; }) =>
       product.name.toLowerCase().includes(search.toLowerCase()) ||
       product.description.toLowerCase().includes(search.toLowerCase())
   )
@@ -78,12 +78,13 @@ export default function OrdersPage({ searchParams }: Props) {
     onOrderPage()
   }, [user, page,search])
 
-  const handleChangePassword = async (e: React.FormEvent) => {
+  const handleCategory = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const {ok, message} = await createCategory(newCategory,cookie.token)  
+    const {ok, message, category} = await createCategory(newCategory,cookie.token)  
       setMessage(message)
       setStatus(ok)
+     
       setNewCategory('')
 
   };
@@ -122,6 +123,7 @@ export default function OrdersPage({ searchParams }: Props) {
             <IoSearchOutline className="w-5 h-5" />
           </button>
         </form>
+
       <div className="mb-10 overflow-x-auto">
         <table className="min-w-full">
           <thead className="bg-gray-200 border-b">
@@ -147,7 +149,8 @@ export default function OrdersPage({ searchParams }: Props) {
             </tr>
           </thead>
           <tbody>
-            {products && products.map((product) => (
+          {filteredProducts?.length > 0 ? (
+              filteredProducts?.map((product) => (
               <tr key={product._id} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   <Link href={`/product/${product.name}`}>
@@ -220,9 +223,15 @@ export default function OrdersPage({ searchParams }: Props) {
                     </label>
                   </div>
                 </td>
-
               </tr>
-            ))}
+             ))
+            ) : (
+              <tr>
+                <td colSpan={6} className="px-6 py-4 text-center text-gray-500">
+                  No se encontraron productos que coincidan con la búsqueda.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -237,7 +246,7 @@ export default function OrdersPage({ searchParams }: Props) {
               <span className="text-red-600">{message}</span>:
               <span className="text-green-600">{message}</span>
               }
-            <form onSubmit={handleChangePassword} className="space-y-4">
+            <form onSubmit={handleCategory} className="space-y-4">
               <div>
                 <label htmlFor="newCategory" className="block text-sm font-medium text-gray-700 mb-1">Nueva categoria</label>
                 <input

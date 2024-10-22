@@ -3,7 +3,7 @@
 import { createUpdateProduct, deleteProductImage } from '@/actions';
 import { ProductImage } from '@/components';
 import { Category, Product } from '@/interfaces';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
@@ -31,6 +31,7 @@ interface FormInputs {
 
 export const ProductForm = ({ product, categories }: Props) => {
   const router = useRouter();
+  const [message, setMessage] = useState('');
 
   const {
     handleSubmit,
@@ -107,6 +108,9 @@ export const ProductForm = ({ product, categories }: Props) => {
 
     if (!ok) {
       return;
+    }else{
+     
+      setMessage("Guardado con éxito")
     }
 
     router.replace(`/admin/product/${updatedProduct?.name}`);
@@ -197,6 +201,9 @@ export const ProductForm = ({ product, categories }: Props) => {
         <button className="btn-primary w-full">
           Guardar
         </button>
+        <span className='text-lg text-green-500' >
+          {message && message}
+          </span>
       </div>
 
       <div className="w-full">

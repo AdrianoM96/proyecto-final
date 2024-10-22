@@ -13,18 +13,17 @@ export default async function SearchPage({ searchParams }: Props) {
 
     const search = searchParams.search || '';
     const page = searchParams.page ? parseInt(searchParams.page) : 1;
-  
-   
+
+
     const { products, currentPage, totalPages } = await getPaginatedProductsWithImages({ page, search });
 
-   
-    
+ 
     const filteredProducts = search
-    ? products.filter((product: { name: string; description: string; }) =>
-        product.name.toLowerCase().includes(search.toLowerCase()) ||
-        product.description.toLowerCase().includes(search.toLowerCase())
-    )
-    : products;
+        ? products.filter((product: { name: string; description: string; }) =>
+            product.name.toLowerCase().includes(search.toLowerCase()) ||
+            product.description.toLowerCase().includes(search.toLowerCase())
+        )
+        : products;
 
 
     return (
@@ -36,7 +35,9 @@ export default async function SearchPage({ searchParams }: Props) {
             ) : (
                 <ProductGrid products={filteredProducts} />
             )}
-             <Pagination totalPages={ totalPages } />
+            {(totalPages ?? 1) > 1 && (
+                <Pagination totalPages={totalPages ?? 1} />
+            )}
         </div>
     );
 }

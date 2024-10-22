@@ -8,6 +8,8 @@ import { TbReportSearch } from "react-icons/tb";
 import { useCartStore, useUIStore } from '@/store';
 import { useAuth } from '@/components';
 
+
+
 export const Sidebar = () => {
 
   const isSideMenuOpen = useUIStore(state => state.isSideMenuOpen);

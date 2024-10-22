@@ -28,6 +28,8 @@ export default async function CategoryByPage({ params, searchParams }: Props) {
     category: category as any,
   });
 
+
+
   if (!products || products.length === 0) {
     
     return (
@@ -43,18 +45,11 @@ export default async function CategoryByPage({ params, searchParams }: Props) {
     );
   }
 
-  const labels: Record<string, string>  = {
-    'men': 'para hombres',
-    'women': 'para mujeres',
-    'kid': 'para niños',
-    'unisex': 'para todos'
-  }
-
-
+ 
   return (
     <>
       <Title
-        title={`Artículos de ${ labels[category] }`}
+        title={`Artículos de ${[category] }`}
         subtitle="Todos los productos"
         className="mb-2"
       />

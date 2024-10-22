@@ -20,7 +20,6 @@ export const PlaceOrder = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
-
 const {user} = useAuth()
 
 const cookies = Cookies.get();
@@ -52,15 +51,12 @@ const cookies = Cookies.get();
    
     const resp = await placeOrder( productsToOrder, address, user, cookies.token);
  
-
-
      if ( !resp?.ok ) {
        setIsPlacingOrder(false);
        setErrorMessage(resp.message);
        return;
      }
 
-    
    
      router.replace('/orders/' + resp.order?._id );
 

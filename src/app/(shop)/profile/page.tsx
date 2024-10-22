@@ -107,9 +107,7 @@ export default function ProfilePage() {
       </div>
       <footer className="mt-8 text-center text-sm text-gray-500">
         <p>Proyecto final © 2024</p>
-        <div className="mt-2 space-x-4">
-          <Link href="/" className="hover:underline">Privacidad & Legal</Link>
-        </div>
+      
       </footer>
   
       {isModalOpen && (

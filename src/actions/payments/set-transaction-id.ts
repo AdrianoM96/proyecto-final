@@ -28,11 +28,11 @@ import axios from "axios";
 export const setTransactionId = async( orderId: string, transactionId: string, token:any, paymentMethod?: string ) => {
 
   try {
-    console.log("EMPEZO LA TRANSACTION")
+    
 
 
     const order = await updateOrder(orderId,transactionId,token, paymentMethod)
-    console.log("TERMINO LA TRRANSACION")
+    
 
     if ( !order ) {
       return {

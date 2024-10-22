@@ -17,7 +17,7 @@ export const changeUserPassword = async( userId: any, token:string, currentPassw
     if((newPassword || confirmPassword).length < 6){
       return {
           ok:false,
-          message:"Las contraseñas no coinciden"
+          message:"La nueva contraseña debe tener al menos 6 caracteres"
       }
   }
 

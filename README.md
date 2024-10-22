@@ -27,7 +27,10 @@ Introduce estos datos para loguearte
 # Aclaracion
 Para que funcione las compras de mercado pago, debes usar un servidor https, por eso en este proyecto viene un archivo de cloudflare para que puedas crear tu tunnel con:
 
-`./cloudflared tunnel --url localhost:tu puerto/`
+`./cloudflared tunnel --url localhost:tu puerto/
+ 
+ Por ejemplo: ./cloudflared tunnel --url localhost:3000/
+`
 
 Abrir el proyecto en esta dirección y además debe colocarla en las variables segun corresponda en el proyecto backend
 

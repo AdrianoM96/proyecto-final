@@ -61,6 +61,7 @@ Este proyecto con
 * Envio de la factura de compra al correo del cliente
 * Historial de busqueda para cada cuenta
 * Si se olvida la contraseña se puede recuperar mediante un email a la cuenta y siguiendo las instrucciones
+* Verificar email 
 
 
 

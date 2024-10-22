@@ -78,7 +78,7 @@ Este proyecto utiliza las siguientes dependencias clave:
 - **PayPal React**: ^8.1.3
 - **MercadoPago SDK React**: ^0.0.19
 
-### Dependencias de desarrollo importantes
+### Dependencias de desarrollo
 
 - **Typescript**: ^5
 - **TailwindCSS**: ^3.4.1

@@ -29,7 +29,7 @@ Para que funcione las compras de mercado pago, debes usar un servidor https, por
 
 `./cloudflared tunnel --url localhost:tu puerto/`
 
-Abrir el proyecto en esta dirección y además debe colocarla en el proyecto backend, en las variables de mercadopago
+Abrir el proyecto en esta dirección y además debe colocarla en las variables segun corresponda en el proyecto backend
 
 También debes leer las instrucciones del proyecto backend.
 
@@ -60,13 +60,11 @@ Este proyecto con
 * Responsive Design
 * Envio de la factura de compra al correo del cliente
 * Historial de busqueda para cada cuenta, el cual se borra automaticamente cada 15 dias para limpiar espacio
-* Si se olvida la contraseña se puede recuperar mediante un email a la cuenta y siguiendo las instrucciones
-* Verificar email 
-
+* Si se olvida la contraseña se puede recuperar mediante envio de token al correo y siguiendo las instrucciones
+* Verificacion de email mediante envio de token al correo
 
 
 ## Dependencias
-
 Este proyecto utiliza las siguientes dependencias clave:
 
 - **Next.js**: 14.2.5

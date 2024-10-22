@@ -30,14 +30,14 @@ export default function OrdersByIdPage({ params }: Props) {
 
   const [preferenceId, setPreferenceId] = useState('')
   const [messageError, setMessageError] = useState('')
- 
-  const clearCart = useCartStore( state => state.clearCart );
-  const cart = useCartStore( state => state.cart );
+
+  const clearCart = useCartStore(state => state.clearCart);
+  const cart = useCartStore(state => state.cart);
 
   const token = Cookies.get('token');
   const hasUpdatedStock = useRef(false);
 
-  const productsToStock = cart.map( product => ({
+  const productsToStock = cart.map(product => ({
     productId: product.id,
     quantity: product.quantity,
     size: product.size,
@@ -45,14 +45,14 @@ export default function OrdersByIdPage({ params }: Props) {
 
   const handlePay = async () => {
     const verifyStock = await updateStock(productsToStock, user, token || "", false)
-   
-    if(verifyStock.ok){
+
+    if (verifyStock.ok) {
       const preferenceId = await createPreference(orderTr, params.id)
       if (preferenceId) {
         setPreferenceId(preferenceId)
       }
     } else {
-      verifyStock.outStock.forEach((error:any) => {
+      verifyStock.outStock.forEach((error: any) => {
         setMessageError(`${error.productName} talle ${error.size} no hay suficiente stock`);
       });
     }
@@ -60,7 +60,7 @@ export default function OrdersByIdPage({ params }: Props) {
 
   const fetchOrder = useCallback(async () => {
     const { ok, order } = await getOrderById(id, user);
-    
+
     if (ok) {
       setOrderTr(order)
       setAddress(order?.orderAddress || null);
@@ -70,18 +70,18 @@ export default function OrdersByIdPage({ params }: Props) {
   useEffect(() => {
     const status = searchParams.get('status')
     const payment_id = searchParams.get('payment_id')
-  
+
     if (status && payment_id && status === 'approved' && !orderTr?.isPaid && !hasUpdatedStock.current) {
       const completeTrasaccion = async () => {
         if (token) {
           const response = await setTransactionId(id, payment_id, token, "mercadopago")
-         
-          if(response.ok === true) {
-            
+
+          if (response.ok === true) {
+
             if (!hasUpdatedStock.current) {
               const updateStocks = await updateStock(productsToStock, user, token, true);
-   
-              if(updateStocks.ok){
+
+              if (updateStocks.ok) {
                 fetchOrder();
                 clearCart();
                 hasUpdatedStock.current = true;
@@ -95,7 +95,7 @@ export default function OrdersByIdPage({ params }: Props) {
     } else if (!orderTr) {
       fetchOrder();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchOrder]);
 
 
@@ -103,7 +103,10 @@ export default function OrdersByIdPage({ params }: Props) {
 
   if (!orderTr || !address) {
 
-    return <div>Cargando...</div>;
+    return <div className="flex justify-center items-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+
   }
   const handlePaymentSuccess = () => {
     fetchOrder();
@@ -125,7 +128,7 @@ export default function OrdersByIdPage({ params }: Props) {
 
 
 
-              {orderTr!.orderItems.map((item:any) => (
+              {orderTr!.orderItems.map((item: any) => (
                 <div
                   key={item.product.name + "-" + item.size}
                   className="flex mb-5"
@@ -207,13 +210,13 @@ export default function OrdersByIdPage({ params }: Props) {
                         <PayPalButton amount={orderTr!.total} orderId={orderTr!._id} onPaymentSuccess={handlePaymentSuccess} productsToStock={productsToStock} token={token} user={user} />
 
                         <button
-                           className={`w-full h-full border-none px-5 py-2 rounded cursor-pointer ${preferenceId ? 'bg-gray-400 text-gray-200' : 'bg-[#009ee3] text-white'}`}
+                          className={`w-full h-full border-none px-5 py-2 rounded cursor-pointer ${preferenceId ? 'bg-gray-400 text-gray-200' : 'bg-[#009ee3] text-white'}`}
                           onClick={handlePay}
-                          disabled={!!preferenceId} 
+                          disabled={!!preferenceId}
                         >
                           Pagar con MercadoPago
                         </button>
-                        { messageError &&
+                        {messageError &&
 
                           <p className='text-red-600 text-center text-base'> {messageError}</p>
                         }

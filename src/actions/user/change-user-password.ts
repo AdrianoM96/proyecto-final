@@ -14,6 +14,12 @@ export const changeUserPassword = async( userId: any, token:string, currentPassw
             message:"Las contraseñas no coinciden"
         }
     }
+    if((newPassword || confirmPassword).length < 6){
+      return {
+          ok:false,
+          message:"Las contraseñas no coinciden"
+      }
+  }
 
   try {
     const updateUser = await axios.put(`${process.env.NEXT_PUBLIC_URL}/users/password/${userId}`,{ currentPassword: currentPassword, newPassword:newPassword

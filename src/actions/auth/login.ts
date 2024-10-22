@@ -24,7 +24,7 @@ export const login = async ( user:User ) => {
 
     return {
       ok: false,
-      message: 'Esta cuenta no existe'
+      message: 'Los datos son incorrectos'
     }
   }
 

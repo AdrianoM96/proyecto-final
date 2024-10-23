@@ -6,10 +6,12 @@ Este proyecto final de la Tecnicatura Universitaria en Programación de la UTN R
     factura de compra directamente en su correo electrónico, además de la opción de descargarla desde el apartado de sus órdenes. Los administradores, por su parte,
     tienen acceso a la gestión de productos,
     control de órdenes, facturación y la generación de reportes detallados.
-Aqui el repo backend: (https://github.com/AdrianoM96/proyecto-final-back)
 
 ## Demo
  [DEMO](https://youtu.be/SGd5HuVg-Eo)
+
+## Repositorio backend
+[BACKEND] (https://github.com/AdrianoM96/proyecto-final-back)
 
 
 ## Instalacion

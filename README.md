@@ -1,4 +1,4 @@
-# PROYECTO - FINAL UTN
+# PROYECTO FINAL UTN - frontend
 Este proyecto es un E-Commerce de indumentaria, realizado con NextJs y NodeJs para el backend y usando MongoDb
 Aqui el repo (https://github.com/AdrianoM96/proyecto-final-back)
 
@@ -36,7 +36,7 @@ Abrir el proyecto en esta dirección y además debe colocarla en las variables s
 
 También debes leer las instrucciones del proyecto backend.
 
-Además debe colocar sus credenciales de paypal dev y cloudinary para el completo funcionamiento del proyecto
+Además debe colocar sus credenciales de paypal dev y cloudinary para el completo funcionamiento del proyecto. 
 
 
 ## Contenido

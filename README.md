@@ -3,7 +3,7 @@ Este proyecto es un E-Commerce de indumentaria, realizado con NextJs y utilizand
 Aqui el repo (https://github.com/AdrianoM96/proyecto-final-back)
 
 ## Demo
- ...[Ver video de demostración](./demo.mp4)
+ [DEMO](https://youtu.be/SGd5HuVg-Eo)
 
 
 ## Instalacion

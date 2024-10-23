@@ -1,5 +1,5 @@
-# proyecto-final
-Este proyecto es un E-Commerce de indumentaria, realizado con NextJs y utilizando un proyecto bancked hecho en nodeJs y usando MongoDb
+# PROYECTO - FINAL UTN
+Este proyecto es un E-Commerce de indumentaria, realizado con NextJs y NodeJs para el backend y usando MongoDb
 Aqui el repo (https://github.com/AdrianoM96/proyecto-final-back)
 
 ## Demo

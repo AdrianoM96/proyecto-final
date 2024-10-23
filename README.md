@@ -11,7 +11,7 @@ Este proyecto final de la Tecnicatura Universitaria en Programación de la UTN R
  [DEMO](https://youtu.be/SGd5HuVg-Eo)
 
 ## Repositorio backend
-[BACKEND] (https://github.com/AdrianoM96/proyecto-final-back)
+[BACKEND](https://github.com/AdrianoM96/proyecto-final-back)
 
 
 ## Instalacion

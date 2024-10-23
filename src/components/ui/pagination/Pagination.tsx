@@ -77,7 +77,7 @@ export const Pagination = ({ totalPages }: Props) => {
                     clsx(
                       "page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none",
                       {
-                        'bg-blue-600 shadow-sm text-white hover:text-white hover:bg-blue-700': page === currentPage
+                        'rounded-md border border-slate-300 py-2 px-3 text-center text-sm transition-all shadow-sm hover:shadow-lg bg-slate-700 text-white hover:text-white hover:bg-slate-400 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2': page === currentPage
                       }
                     )
                   }

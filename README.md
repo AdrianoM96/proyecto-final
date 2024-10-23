@@ -3,7 +3,8 @@ Este proyecto es un E-Commerce de indumentaria, realizado con NextJs y utilizand
 Aqui el repo (https://github.com/AdrianoM96/proyecto-final-back)
 
 ## Demo
- ... ![](./src/assets/gif/demo.gif)
+ ... ![Ver video de demostración](./demo.mp4)
+
 
 ## Instalacion
 1) Clonar el repositorio.
@@ -34,6 +35,8 @@ Para que funcione las compras de mercado pago, debes usar un servidor https, por
 Abrir el proyecto en esta dirección y además debe colocarla en las variables segun corresponda en el proyecto backend
 
 También debes leer las instrucciones del proyecto backend.
+
+Además debe colocar sus credenciales de paypal dev y cloudinary para el completo funcionamiento del proyecto
 
 
 ## Contenido

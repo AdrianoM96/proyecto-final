@@ -84,7 +84,8 @@ export default function ReportesPage() {
         </select>
       </div>
 
-      <div className="mb-4">
+   { tipoReporte && 
+    <div className="mb-4">
         <label htmlFor="periodoTipo" className="block mb-2 font-semibold">Período</label>
         <select
           id="periodoTipo"
@@ -98,6 +99,7 @@ export default function ReportesPage() {
           <option value="rango">Elegir por fecha</option>
         </select>
       </div>
+      }
 
     
       {periodoTipo && (

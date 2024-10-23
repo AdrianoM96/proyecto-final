@@ -110,7 +110,7 @@ export const TopMenu = () => {
       <div>
         <Link href="/">
           <span className={`${titleFont.className} antialiased font-bold`}>
-            Proyecto final
+          Invictus
           </span>
           <span> </span>
         </Link>

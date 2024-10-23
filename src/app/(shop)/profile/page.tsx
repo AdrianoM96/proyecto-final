@@ -106,7 +106,7 @@ export default function ProfilePage() {
         </div>
       </div>
       <footer className="mt-8 text-center text-sm text-gray-500">
-        <p>Proyecto final © 2024</p>
+        <p>Invictus © 2024</p>
       
       </footer>
   

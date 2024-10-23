@@ -52,22 +52,22 @@ Este proyecto con
 * Formulario para que el usuario llene con información correcta y obligatoria, donde se le pide nombre completo, direccion, numero de telefono, ciudad, pais. Tiene la posibildad de que todos los datos ingresados se recuerden para cuando loguee en el mismo navegador u otro.
 * Una vez "Finalizada la orden" se genera el codigo de la orden y se la la posibildad de pagarla en ese momento , o en caso de no hacerla queda guardada la orden para poderla pagar luego, con paypal o mercado pago . Se podra ver en la pestaña ordenes.
 * Si se cumple el rol de administrador tendra en la barra de navegacion nuevas pestañas
+* Si se cumple el rol de administrador tendra en la barra de navegacion nuevas pestañas
 * Los productos cuentan con stock segun su talle
 * El administrador podra hacer un abm de productos con sus datos incluyendo imagenes, pausar una publicacion, tambien cuenta con un buscador de productos en el panel
 * El administrador podra cambiar el rol de los usuarios registrados
-* El administrador podra ver todas las ordenes efectuadas y su condicion de pago
+* El administrador podra ver TODAS las ordenes efectuadas y su condicion de pago
 * El administrador podra pedir reportes de ventas entre un rango de fecha que quieras y reportes de stock actual
 * El administrador podra establecer sus datos fiscales que van en la factura
+* El usuario podra ver su perfil, verificar su email, efectuar compras, ver sus propias ordenes
 * Perfil de usuario con algunos datos y posibilidad de cambiar contraseña.
-* Envio de correo electronico para confirmar el email dede el perfil
 * Validacion de formularios
 * Uso de server y clients components
-* Responsive Design
 * Envio de la factura de compra al correo del cliente
 * Historial de busqueda para cada cuenta, el cual se borra automaticamente cada 15 dias para limpiar espacio
 * Si se olvida la contraseña se puede recuperar mediante envio de token al correo y siguiendo las instrucciones
 * Verificacion de email mediante envio de token al correo
-
+* Responsive Design
 
 ## Dependencias
 Este proyecto utiliza las siguientes dependencias clave:

@@ -87,7 +87,6 @@ Este proyecto utiliza las siguientes dependencias clave:
 - **Zustand**: ^4.4.6
 - **Zod**: ^3.23.8
 - **Cloudinary**: ^2.4.0
-- **Swiper**: ^11.0.3
 - **PayPal React**: ^8.1.3
 - **MercadoPago SDK React**: ^0.0.19
 

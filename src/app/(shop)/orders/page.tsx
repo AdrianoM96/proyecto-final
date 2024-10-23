@@ -80,7 +80,7 @@ export default function OrdersPage({ searchParams }: Props) {
 
   return (
     <>
-      <Title title="Orders" />
+      <Title title="Órdenes" />
   
       <div className="mb-10">
         {orderss.length === 0 ? (

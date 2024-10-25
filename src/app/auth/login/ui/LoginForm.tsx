@@ -91,7 +91,7 @@ export const LoginForm = () => {
               {...register('password', { required: true, minLength: 6 })}
             />
               {
-        errors.password && (<p className='text-red-500'>La contraseña es requerida y debe tener mas de 6 caracteres</p>)
+        errors.password && (<p className='text-red-500'>La contraseña es requerida </p>)
       }
           </label>
 
